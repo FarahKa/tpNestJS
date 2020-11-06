@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
 enum status {
@@ -58,8 +58,6 @@ export class TodoController {
     
     }
 
-
-
   @Get('todo')
   getTodos(): Array<Todo> {
     return this.todolist;
@@ -77,6 +75,35 @@ export class TodoController {
       this.todolist.push(added);
       return(added);
       
+  }
+
+  @Put('modifyTodo')
+  modifyTodo(@Body() body) : Todo[]{
+      const modified = new Todo(body.name, body.date, body.description);
+      modified.id=body.id;
+      this.todolist = this.todolist.filter((element)=> {
+          return element.id != body.id;
+      })
+      this.todolist.push(modified);
+      return this.todolist;
+  }
+
+  @Patch('patchTodo')
+  patchTodo(@Body() body) : Todo[]{
+      const toModify = this.todolist.filter((element) => {
+          return element.id == body.id;
+      })[0]
+      if(body.name){
+          toModify.name = body.name;
+      }
+      if(body.date){
+          toModify.date=body.date;
+      }
+      if(body.description){
+          toModify.description = body.description;
+      }
+      return this.todolist;
+    
   }
 
   @Delete('delTodo/:id')
