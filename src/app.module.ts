@@ -1,3 +1,4 @@
+import { HelmetMiddleware } from '@nest-middlewares/helmet';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -12,9 +13,12 @@ import { TodoModule } from './todo/todo.module';
 //NestModule Pour pouvoir utiliser des middleware
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    //throw new Error('Method not implemented.');
-    consumer.apply(LoggerMiddleware).forRoutes('transform'); //laisser routes vides si on veut que ça soit sur toutes les routes
+    consumer
+    .apply(HelmetMiddleware).forRoutes('')
+    .apply(LoggerMiddleware).forRoutes('') //laisser routes vides si on veut que ça soit sur toutes les routes
     //peut aussi prendre un controlleur
     // ou des objets du style {path:'path', method:RequestMethod.GET}, {...}
+    //.apply(MorganMiddleware).forRoutes('') //does not worl :(
+
   }
 }
