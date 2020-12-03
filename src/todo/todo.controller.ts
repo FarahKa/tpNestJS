@@ -16,6 +16,7 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 import { status } from './enums/status';
 import { TodoService } from './todo.service';
 import Todo from './todo-model';
+import { FirstPipe } from 'src/pipes/first.pipe';
 
 @Controller()
 export class TodoController {
@@ -49,8 +50,9 @@ export class TodoController {
     return this.todoService.modifyTodo(body);
   }
 
+  //exemple utilisation pipe:
   @Patch('patchTodo')
-  patchTodo(@Body() body: UpdateTodoDto): Todo[] {
+  patchTodo(@Body(FirstPipe) body: UpdateTodoDto): Todo[] {
     return this.todoService.patchTodo(body);
   }
 
