@@ -72,6 +72,7 @@ export class TodoService {
     modifyTodo(body: UpdateTodoDto): Todo[] {
       const modified = new Todo(body.name, body.date, body.description);
       modified.id = body.id;
+      modified.state = body.status;
       this.todolist = this.todolist.filter(element => {
         return element.id != body.id;
       });
@@ -80,19 +81,19 @@ export class TodoService {
     }
   
     patchTodo(body:UpdateTodoDto): Todo[] {
-      const toModify = this.todolist.filter(element => {
-        return element.id == body.id;
-      })[0];
-      if (body.name) {
+      const toModify = this.todolist.find(e => e.id = body.id);
+      if(body.name){
         toModify.name = body.name;
       }
-      if (body.date) {
-        toModify.date = body.date;
-      }
-      if (body.description) {
+      if(body.description){
         toModify.description = body.description;
       }
-      toModify.state = body.status;
+      if(body.date){
+        toModify.date = body.date;
+      }
+      if(body.status){
+        toModify.state = body.status;
+      }
       return this.todolist;
     }
   
