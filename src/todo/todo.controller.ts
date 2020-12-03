@@ -50,14 +50,21 @@ export class TodoController {
     return this.todoService.modifyTodo(body);
   }
 
-  //exemple utilisation pipe:
+
   @Patch('patchTodo')
-  patchTodo(@Body(FirstPipe) body: UpdateTodoDto): Todo[] {
+  patchTodo(@Body() body: UpdateTodoDto): Todo[] {
     return this.todoService.patchTodo(body);
   }
 
   @Delete('delTodo/:id')
   delTodo(@Param('id') id: string): Array<Todo> {
     return this.todoService.delTodo(id);
+  }
+
+  //fonction pour exercice custom pipe:
+  @Post('transform')
+  convertArray(@Body(FirstPipe) body: any): String {
+    console.log(body);
+    return body;
   }
 }

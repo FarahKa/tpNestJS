@@ -4,6 +4,10 @@ import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 export class FirstPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
     //Faire les changements
-    return value;
+    let result = "";
+    value.skills.forEach(skill => {
+      result = result + "-" + skill.toUpperCase();
+    })
+    return result;
   }
 }
